@@ -1,3 +1,3 @@
 # Using local DB
 
-start local DB (backend/db.json)
+start local DB (json-server --watch backend/db.json)
