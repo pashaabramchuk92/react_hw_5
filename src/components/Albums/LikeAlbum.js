@@ -3,7 +3,7 @@ import { useBlog } from "../../Context";
 
 const LikePost = ({ like, id }) => {
 
-  const { pathPost, setLikeData, setContextLike } = useBlog();
+  const { pathAlbums, setLikeData, setContextLike } = useBlog();
 
   const [isLike, setIsLike] = useState(false);
 
@@ -17,14 +17,14 @@ const LikePost = ({ like, id }) => {
   const handleClick = (e) => {
     e.preventDefault();
 
-    setLikeData(pathPost, id, !isLike)
-      .then(post => {
-        setContextLike(post.like);
+    setLikeData(pathAlbums, id, !isLike)
+      .then(album => {
+        setContextLike(album.like);
         setIsLike(true);
         setContextLike(true);
     
         if(isLike) {
-          setContextLike(post.like);
+          setContextLike(album.like);
           setIsLike(false);
           setContextLike(false);
         }
@@ -34,8 +34,7 @@ const LikePost = ({ like, id }) => {
   return (
     <a
       href="/"
-      className="uk-icon-link"
-      uk-icon="heart"
+      uk-icon="icon: heart; ratio: 2"
       style={{color: isLike ? 'red' : ''}}
       onClick={(e) => handleClick(e)}
     > </a>

@@ -2,6 +2,7 @@ import SearchBar from './SearchBar';
 import SortPosts from './SortPosts';
 import ShowPosts from './ShowPosts';
 import ChangeView from './ChangeView';
+import { useBlog } from '../../Context';
 
 const NavBar = ({
   isSearching,
@@ -14,6 +15,8 @@ const NavBar = ({
   setViewGrid,
   setViewList,
 }) => {
+  const { postsPage } = useBlog();
+  
   return (
     <div className="uk-margin-medium-bottom uk-flex">
       <SearchBar
@@ -23,12 +26,14 @@ const NavBar = ({
       />
       <SortPosts setOrder={setOrder} />
       <ShowPosts setLimit={setLimit} />
-      <ChangeView
-        viewGrid={viewGrid}
-        viewList={viewList}
-        setViewGrid={setViewGrid}
-        setViewList={setViewList}
-      />
+      {postsPage &&
+        <ChangeView
+          viewGrid={viewGrid}
+          viewList={viewList}
+          setViewGrid={setViewGrid}
+          setViewList={setViewList}
+        />
+      }
     </div>
   )
 }

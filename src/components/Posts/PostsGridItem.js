@@ -4,7 +4,6 @@ import { Link } from "react-router-dom";
 import LikePost from "./LikePost";
 
 const PostsGridItem = ({ post }) => {
-
   return (
     <div>
       <div className="uk-card uk-card-default uk-margin-medium-bottom">

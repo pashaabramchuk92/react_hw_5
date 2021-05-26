@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 import LikePost from "./LikePost";
 
@@ -17,7 +17,7 @@ const PostListItem = ({ post }) => {
           <div className="uk-card-body">
               <h3 className="uk-card-title uk-margin-remove-bottom uk-flex uk-flex-middle uk-flex-between">
               {`${post.title.slice(0, 10).trim()}...`}
-                <LikePost isLike={post.like} />
+                <LikePost like={post.like} id={post.id} />
               </h3>
             <p>
             {`${post.body.slice(0, 100).trim()}...`}
@@ -33,4 +33,4 @@ const PostListItem = ({ post }) => {
   )
 }
 
-export default PostListItem;
+export default React.memo(PostListItem);

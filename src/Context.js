@@ -6,9 +6,13 @@ const Context = createContext(null);
 
 const BlogProvider = ({ children }) => {
   const pathPost = 'posts';
+  const pathUsers = 'users';
+  const pathAlbums = 'albums';
 
+  const [postsPage, setPostsPage] = useState(true);
   const [contextLike, setContextLike] = useState(false);
   const [likedPosts, setLikedPosts] = useState([]);
+  const [likedAlbums, setLikedAlbums] = useState([]);
 
   useEffect(() => {
     getLikeData(pathPost)
@@ -16,14 +20,26 @@ const BlogProvider = ({ children }) => {
     setContextLike(true ? false : true);
   }, [pathPost, contextLike]);
 
+  useEffect(() => {
+    getLikeData(pathAlbums)
+      .then(data => setLikedAlbums(data));
+    setContextLike(true ? false : true);
+  }, [pathAlbums, contextLike]);
+
   const contextValue = {
     pathPost,
+    pathUsers,
+    pathAlbums,
     likedPosts,
     contextLike,
+    postsPage,
+    likedAlbums,
+    setLikedAlbums,
     setLikeData,
     setContextLike,
     getLikeData,
-    setLikedPosts
+    setLikedPosts,
+    setPostsPage
   }
 
   return (

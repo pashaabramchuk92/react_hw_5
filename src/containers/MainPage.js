@@ -2,7 +2,6 @@ import { useState, useEffect } from 'react';
 
 import useDebounce from '../hooks/useDebounce';
 import { getData, getTotalCount, getMoreData, } from "../api/api";
-import { BlogProvider } from '../Context';
 
 import PostsGrid from '../components/Posts/PostsGrid';
 import PostsList from '../components/Posts/PostsList';
@@ -10,10 +9,10 @@ import NavBar from '../components/NavBar/NavBar';
 import HeaderContainer from '../components/Header/HeaderContainer';
 import LoadMore from '../components/Footer/LoadMore';
 import Pagination from '../components/Footer/Pagination';
-// import { BlogProvider } from '../BlogContext';
+import { useBlog } from '../Context';
 
 const MainPage = () => {
-  const path = 'posts';
+  const { pathPost } = useBlog();
 
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
@@ -30,23 +29,23 @@ const MainPage = () => {
   const debouncedValue = useDebounce(query, 500);
   
   useEffect(() => {
-    getData(path, page, limit, order, debouncedValue)
+    getData(pathPost, page, limit, order, debouncedValue)
       .then(data => setPosts(data));
     setIsSearching(false);
-  }, [path, page, limit, order, debouncedValue]);
+  }, [pathPost, page, limit, order, debouncedValue]);
 
   useEffect(() => {
-    getTotalCount(path, page)
+    getTotalCount(pathPost, page)
       .then(total => setTotal(total));
-  }, [path, page]);
+  }, [pathPost, page]);
 
   useEffect(() => {
-    getMoreData(path, next + limit, order)
+    getMoreData(pathPost, next + limit, order)
       .then(data => {
         setPosts(data);
         setIsLoding(false);
       });
-  }, [path, next, limit, order]);
+  }, [pathPost, next, limit, order]);
 
   const handleLoadMore = () => {
     setQuery('');
@@ -54,42 +53,40 @@ const MainPage = () => {
   }
 
   return (
-    <BlogProvider>
-      <div className="uk-main">
-        <HeaderContainer />
-        <div className="uk-section">
-          <div className="uk-container">
-            <NavBar
-              isSearching={isSearching}
-              viewGrid={viewGrid}
-              viewList={viewList}
-              setIsSearching={setIsSearching}
-              setQuery={setQuery}
-              setOrder={setOrder}
-              setLimit={setLimit}
-              setViewGrid={setViewGrid}
-              setViewList={setViewList}
-            />
-            {
-              viewGrid
-              ? <PostsGrid posts={posts} />
-              : <PostsList posts={posts} />
-            }
-            <LoadMore
-              handleLoadMore={handleLoadMore}
-              isLoading={isLoading}
-              setIsLoding={setIsLoding}
-            />
-            <Pagination
-              total={total}
-              limit={limit}
-              page={page}
-              setPage={setPage}
-            />
-          </div>
+    <div className="uk-main">
+      <HeaderContainer />
+      <div className="uk-section">
+        <div className="uk-container">
+          <NavBar
+            isSearching={isSearching}
+            viewGrid={viewGrid}
+            viewList={viewList}
+            setIsSearching={setIsSearching}
+            setQuery={setQuery}
+            setOrder={setOrder}
+            setLimit={setLimit}
+            setViewGrid={setViewGrid}
+            setViewList={setViewList}
+          />
+          {
+            viewGrid
+            ? <PostsGrid posts={posts} />
+            : <PostsList posts={posts} />
+          }
+          <LoadMore
+            handleLoadMore={handleLoadMore}
+            isLoading={isLoading}
+            setIsLoding={setIsLoding}
+          />
+          <Pagination
+            total={total}
+            limit={limit}
+            page={page}
+            setPage={setPage}
+          />
         </div>
       </div>
-    </BlogProvider>
+    </div>
   );
 }
 
