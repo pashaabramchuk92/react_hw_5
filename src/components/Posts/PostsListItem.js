@@ -1,8 +1,13 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import LikePost from "./LikePost";
+
+import { useBlog } from "../../Context";
+import LikeBtn from "../general/LikeBtn";
 
 const PostListItem = ({ post }) => {
+
+  const { likedPosts } = useBlog();
+
   return (
     <div>
       <div
@@ -17,7 +22,11 @@ const PostListItem = ({ post }) => {
           <div className="uk-card-body">
               <h3 className="uk-card-title uk-margin-remove-bottom uk-flex uk-flex-middle uk-flex-between">
               {`${post.title.slice(0, 10).trim()}...`}
-                <LikePost like={post.like} id={post.id} />
+              <LikeBtn
+                id={post.id}
+                isLiked={likedPosts.find(x => x.id === post.id)}
+                like={post.like}
+              />
               </h3>
             <p>
             {`${post.body.slice(0, 100).trim()}...`}

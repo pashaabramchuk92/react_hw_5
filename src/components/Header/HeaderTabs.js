@@ -1,22 +1,14 @@
-import { useEffect, useState } from "react";
-import { Link, withRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 import { useBlog } from "../../Context";
 
 const HeaderTabs = () => {
+
   const { postsPage, setPostsPage } = useBlog();
 
-  const [activeClass, setActiveClass] = useState('');
-  
-  useEffect(() => {
-    if(window.location.pathname === '/' || postsPage) {
-      setActiveClass('uk-active');
-    }
-  }, [postsPage, setActiveClass]);
-  
   return (
     <div className="uk-navbar-left">
       <ul className="uk-navbar-nav">
-        <li className={activeClass} >
+        <li className={window.location.pathname === '/' || postsPage ? 'uk-active' : ''} >
           <Link
             to='/'
             onClick={() => {

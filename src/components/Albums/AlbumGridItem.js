@@ -1,7 +1,11 @@
 import React from "react";
-import LikeAlbum from "./LikeAlbum";
+import { useBlog } from "../../Context";
+import LikeBtn from "../general/LikeBtn";
 
 const AlbumGridItem = ({ album }) => {
+
+  const { likedAlbums } = useBlog();
+
   return (
     <div>
       <div className="uk-card uk-card-default uk-margin-medium-bottom uk-light">
@@ -17,7 +21,11 @@ const AlbumGridItem = ({ album }) => {
             <p>{album.title.slice(0, 40)}</p>
         </div>
         <div className="uk-position-top-right uk-overlay">
-          <LikeAlbum like={album.like} id={album.id} />
+          <LikeBtn
+            id={album.id}
+            isLiked={likedAlbums.find(x => x.id === album.id)}
+            like={album.like}
+          />
         </div>
       </div>
     </div>

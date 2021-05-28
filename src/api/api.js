@@ -17,18 +17,6 @@ const getLikeData = async (path) => {
   const res = await fetch(`${process.env.REACT_APP_API_URL}/${path}?like_like=true`);
   return await res.json();
 }
-const setLikeData = async (path, id, like) => {
-  const res = await fetch(`${process.env.REACT_APP_API_URL}/${path}/${id}`, {
-    method: 'PATCH',
-    headers: {
-      'Content-Type': 'application/json'
-    },
-    body: JSON.stringify({
-      like: like
-    })
-  });
-  return await res.json();
-}
 
 const getCurrentData = async (path, id) => {
   const res = await fetch(`${process.env.REACT_APP_API_URL}/${path}/${id}`);
@@ -56,7 +44,6 @@ export {
   getTotalCount,
   getMoreData,
   getLikeData,
-  setLikeData,
   getCurrentData,
   getDataComments,
   postDataComment,

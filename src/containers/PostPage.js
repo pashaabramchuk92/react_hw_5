@@ -12,23 +12,23 @@ const PostPage = ({
     params: { id }
   }
 }) => {
-  const { pathPost, pathUsers } = useBlog();
+  const { pathPosts, pathUsers } = useBlog();
 
   const [currentPost, setCurrentPost] = useState({});
   const [currentUser, setCurrentUser] = useState({});
   const [comments, setComments] = useState([]); 
 
   useEffect(() => {
-    getCurrentData(pathPost, id).then(data => setCurrentPost(data));
-  }, [pathPost, id]);
+    getCurrentData(pathPosts, id).then(data => setCurrentPost(data));
+  }, [pathPosts, id]);
 
   useEffect(() => {
     getCurrentData(pathUsers, currentPost.userId).then(data => setCurrentUser(data));
   }, [pathUsers, currentPost.userId]);
 
   useEffect(() => {
-    getDataComments(pathPost, id).then(data => setComments(data.comments));
-  }, [pathPost, id]);
+    getDataComments(pathPosts, id).then(data => setComments(data.comments));
+  }, [pathPosts, id]);
 
   return (
     <BlogProvider>

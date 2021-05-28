@@ -1,16 +1,24 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-import LikePost from "./LikePost";
+import { useBlog } from "../../Context";
+import LikeBtn from "../general/LikeBtn";
 
 const PostsGridItem = ({ post }) => {
+
+  const { likedPosts } = useBlog();
+
   return (
     <div>
       <div className="uk-card uk-card-default uk-margin-medium-bottom">
         <div className="uk-card-header">
           <h3 className="uk-card-title uk-margin-remove-bottom uk-flex uk-flex-middle uk-flex-between">
             {`${post.title.slice(0, 10).trim()}...`}
-            <LikePost like={post.like} id={post.id} />
+            <LikeBtn
+              id={post.id}
+              isLiked={likedPosts.find(x => x.id === post.id)}
+              like={post.like}
+            />
           </h3>
         </div>
         <div className="uk-card-body">

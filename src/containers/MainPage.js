@@ -12,7 +12,7 @@ import Pagination from '../components/Footer/Pagination';
 import { useBlog } from '../Context';
 
 const MainPage = () => {
-  const { pathPost } = useBlog();
+  const { pathPosts } = useBlog();
 
   const [posts, setPosts] = useState([]);
   const [page, setPage] = useState(1);
@@ -29,23 +29,23 @@ const MainPage = () => {
   const debouncedValue = useDebounce(query, 500);
   
   useEffect(() => {
-    getData(pathPost, page, limit, order, debouncedValue)
+    getData(pathPosts, page, limit, order, debouncedValue)
       .then(data => setPosts(data));
     setIsSearching(false);
-  }, [pathPost, page, limit, order, debouncedValue]);
+  }, [pathPosts, page, limit, order, debouncedValue]);
 
   useEffect(() => {
-    getTotalCount(pathPost, page)
+    getTotalCount(pathPosts, page)
       .then(total => setTotal(total));
-  }, [pathPost, page]);
+  }, [pathPosts, page]);
 
   useEffect(() => {
-    getMoreData(pathPost, next + limit, order)
+    getMoreData(pathPosts, next + limit, order)
       .then(data => {
         setPosts(data);
         setIsLoding(false);
       });
-  }, [pathPost, next, limit, order]);
+  }, [pathPosts, next, limit, order]);
 
   const handleLoadMore = () => {
     setQuery('');

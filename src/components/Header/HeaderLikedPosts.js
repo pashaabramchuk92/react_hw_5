@@ -3,13 +3,12 @@ import { useBlog } from "../../Context";
 const HeaderLikedPosts = () => {
 
   const {
-    pathPost,
+    pathPosts,
     pathAlbums,
     likedPosts,
     likedAlbums,
-    contextLike,
-    setLikeData,
-    setContextLike,
+    setLikePost,
+    setLikeAlbum,
   } = useBlog();
 
   return (
@@ -39,12 +38,7 @@ const HeaderLikedPosts = () => {
                 className="uk-button uk-icon"
                 type="button"
                 uk-icon="icon: close;"
-                onClick={() => {
-                  setLikeData(pathPost, post.id, contextLike)
-                    .then(x => {
-                      setContextLike(!x.like);
-                    })
-                }}
+                onClick={() => setLikePost(pathPosts, post.id, false)}
               >
               </button>
             </td>
@@ -69,12 +63,7 @@ const HeaderLikedPosts = () => {
                 className="uk-button uk-icon"
                 type="button"
                 uk-icon="icon: close;"
-                onClick={() => {
-                  setLikeData(pathAlbums, album.id, contextLike)
-                    .then(x => {
-                      setContextLike(!x.like);
-                    })
-                }}
+                onClick={() => setLikeAlbum(pathAlbums, album.id, false)}
               >
               </button>
             </td>
